@@ -1927,9 +1927,6 @@ bool Pet::Create(uint32 guidlow, Map *map, uint32 phaseMask, uint32 Entry, uint3
         CastSpell(this, 50453, true);
 
     return true;
-
-
-    return true;
 }
 
 bool Pet::HasSpell(uint32 spell) const
