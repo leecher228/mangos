@@ -917,6 +917,19 @@ SpellAuraProcResult Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, Aura
                     }
                     return SPELL_AURA_PROC_FAILED;
                 }
+                // Health Leech (used by Bloodworms)
+                case 50453:
+                {
+                    Unit *owner = GetOwner();
+                    if (!owner || owner->GetTypeId() != TYPEID_PLAYER)
+                        return SPELL_AURA_PROC_FAILED;
+
+                    triggered_spell_id = 50454;
+                    basepoints[0] = int32(damage*1.69);
+                    target = owner;
+                    break;
+                }
+
                 // Sunwell Exalted Healer Neck (Shattered Sun Pendant of Restoration neck)
                 // cast 45478 Light's Salvation if Exalted by Aldor
                 // cast 45430 Arcane Surge if Exalted by Scryers
