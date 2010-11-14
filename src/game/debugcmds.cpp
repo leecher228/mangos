@@ -270,7 +270,7 @@ bool ChatHandler::HandleDebugPlaySoundCommand(char* args)
         return false;
     }
 
-    if (m_session->GetPlayer()->GetSelection())
+    if (!m_session->GetPlayer()->GetSelectionGuid().IsEmpty())
         unit->PlayDistanceSound(dwSoundId,m_session->GetPlayer());
     else
         unit->PlayDirectSound(dwSoundId,m_session->GetPlayer());
@@ -707,7 +707,7 @@ bool ChatHandler::HandleSetValueHelper(Object* target, uint32 field, char* typeS
 {
     ObjectGuid guid = target->GetObjectGuid();
 
-    // not allow access to not existed or critical for work field
+    // not allow access to nonexistent or critical for work field
     if (field >= target->GetValuesCount() || field <= OBJECT_FIELD_ENTRY)
     {
         PSendSysMessage(LANG_TOO_BIG_INDEX, field, guid.GetString().c_str(), target->GetValuesCount());
@@ -910,7 +910,7 @@ bool ChatHandler::HandlerDebugModValueHelper( Object* target, uint32 field, char
 {
     ObjectGuid guid = target->GetObjectGuid();
 
-    // not allow access to not existed or critical for work field
+    // not allow access to nonexistent or critical for work field
     if (field >= target->GetValuesCount() || field <= OBJECT_FIELD_ENTRY)
     {
         PSendSysMessage(LANG_TOO_BIG_INDEX, field, guid.GetString().c_str(), target->GetValuesCount());

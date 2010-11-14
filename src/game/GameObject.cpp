@@ -1225,6 +1225,24 @@ void GameObject::Use(Unit* user)
                         player->RemoveGameObject(this,false);
                         SetOwnerGUID(player->GetGUID());
 
+						// Achievement 'The Lurker Below'
+						float posx = 40; /* postion of 'The Lurker Below' */
+						float posy = -417; 
+						float posz = -21;
+
+						if (skill >= 300 && subzone == 3607/* Serpentshrine Cavern */ && player->GetDistance(40, -417, -21) < 30/* Check if the player is near the spawnpoint */)
+						{ 
+							if (!urand(0, 9))
+							{
+								uint32 theLurkerBelowId = 21217;
+								if (!player->GetAchievementMgr().HasAchievement(144))
+								{
+									player->CompletedAchievement(144);
+									SummonCreature(theLurkerBelowId, posx, posy, posz, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 1000000); // spawn 'The Lurker Below'
+								}
+							}
+						}
+
                         //fish catched
                         player->UpdateFishingSkill();
 
@@ -1236,15 +1254,15 @@ void GameObject::Use(Unit* user)
                             SetLootState(GO_JUST_DEACTIVATED);
                         }
                         else
-                            player->SendLoot(GetGUID(),LOOT_FISHING);
+                            player->SendLoot(GetObjectGuid(),LOOT_FISHING);
                     }
                     else
                     {
                         // fish escaped, can be deleted now
                         SetLootState(GO_JUST_DEACTIVATED);
 
-                        WorldPacket data(SMSG_FISH_ESCAPED, 0);
-                        player->GetSession()->SendPacket(&data);
+						WorldPacket data(SMSG_FISH_ESCAPED, 0);
+						player->GetSession()->SendPacket(&data);
                     }
                     break;
                 }
@@ -1377,7 +1395,7 @@ void GameObject::Use(Unit* user)
 
             Player* player = (Player*)user;
 
-            Player* targetPlayer = ObjectAccessor::FindPlayer(player->GetSelection());
+            Player* targetPlayer = ObjectAccessor::FindPlayer(player->GetSelectionGuid());
 
             // accept only use by player from same group for caster except caster itself
             if (!targetPlayer || targetPlayer == player || !targetPlayer->IsInSameGroupWith(player))
@@ -1431,7 +1449,7 @@ void GameObject::Use(Unit* user)
 
             Player* player = (Player*)user;
 
-            player->SendLoot(GetGUID(), LOOT_FISHINGHOLE);
+            player->SendLoot(GetObjectGuid(), LOOT_FISHINGHOLE);
             player->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_FISH_IN_GAMEOBJECT, GetGOInfo()->id);
             return;
         }

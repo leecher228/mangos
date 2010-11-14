@@ -453,7 +453,7 @@ LexicsCutterNoActionOnGM = 1
 #
 #    GameType
 #        Server realm style
-#        0 = NORMAL;1 = PVP; 4 = NORMAL; 6 = RP; 8 = RPPVP
+#        0 = NORMAL; 1 = PVP; 4 = NORMAL; 6 = RP; 8 = RPPVP
 #        also custom type: 16 FFA_PVP (free for all pvp mode like arena PvP in all zones except rest
 #        activated places and sanctuaries)
 #
@@ -1039,8 +1039,8 @@ ListenRange.Yell = 300
 #        Chat protection from creating fake messages using a lot spaces (other invisible symbols),
 #        not applied to addon language messages, but can prevent working old addons
 #        that use normal languages for sending data to another clients.
-#        Default: 0 (disible fake messages preventing)
-#                 1 (enabled fake messages preventing)
+#        Default: 0 (disable fake messages preventing)
+#                 1 (enable fake messages preventing)
 #
 #    ChatStrictLinkChecking.Severity
 #        Check chat messages for ingame links to spells, items, quests, achievements etc.
@@ -1058,7 +1058,7 @@ ListenRange.Yell = 300
 #    ChatFlood.MessageCount
 #        Chat anti-flood protection, haste message count to activate protection
 #        Default: 10
-#                 0 (disible anti-flood protection)
+#                 0 (disable anti-flood protection)
 #
 #    ChatFlood.MessageDelay
 #        Chat anti-flood protection, minimum message delay to count message
@@ -1780,6 +1780,17 @@ SOAP.Port = 7878
 #    Anticheat.Movement.DetectMountainHack
 #        Turn Speed Check on/off
 #        Default: 1 (on)
+#    Anticheat.Movement.DetectAirJumpHack
+#        Turn Air/Graviti Jump Check on/off
+#        Default: 1 (on)
+#
+#    Anticheat.Movement.DetectTeleportHack
+#        Turn Teleport Check on/off
+#        Default: 1 (on)
+#
+#    Anticheat.Movement.DetectTeleport2PlaneHack
+#        Turn Teleport2Plane Check on/off
+#        Default: 1 (on)
 #
 #    Anticheat.Movement.BanTime
 #        How long the ban should last.
@@ -1809,6 +1820,9 @@ Anticheat.Movement.DetectSpeedHack = 1
 Anticheat.Movement.DetectWaterWalk = 1
 Anticheat.Movement.DetectFlyHack = 1
 Anticheat.Movement.DetectMountainHack = 1
+Anticheat.Movement.DetectAirJumpHack = 1
+Anticheat.Movement.DetectTeleportHack = 1
+Anticheat.Movement.DetectTeleport2PlaneHack = 0
 Anticheat.Movement.BanType = 0
 Anticheat.Movement.BanTime = "1m"
 Anticheat.Movement.MaxXYT = 0.04
