@@ -428,7 +428,7 @@ void WorldSession::HandleMovementOpcodes( WorldPacket & recv_data )
     recv_data >> movementInfo;
     /*----------------*/
 
-    if (!VerifyMovementInfo(movementInfo,guid,mover))
+    if (!VerifyMovementInfo(movementInfo, guid))
         return;
 
     // fall damage generation (ignore in flight case that can be triggered also at lags in moment teleportation to another map).
@@ -525,13 +525,13 @@ void WorldSession::HandleMovementOpcodes( WorldPacket & recv_data )
         }
 
         static const float DIFF_OVERGROUND = 10.0f;
-        float Anti__GroundZ = GetPlayer()->GetMap()->GetHeight(GetPlayer()->GetPositionX(),GetPlayer()->GetPositionY(),MAX_HEIGHT);
-        float Anti__FloorZ = GetPlayer()->GetMap()->GetHeight(GetPlayer()->GetPositionX(),GetPlayer()->GetPositionY(),GetPlayer()->GetPositionZ());
+        float Anti__GroundZ = GetPlayer()->GetTerrain()->GetHeight(GetPlayer()->GetPositionX(),GetPlayer()->GetPositionY(),MAX_HEIGHT);
+        float Anti__FloorZ = GetPlayer()->GetTerrain()->GetHeight(GetPlayer()->GetPositionX(),GetPlayer()->GetPositionY(),GetPlayer()->GetPositionZ());
         float Anti__MapZ = ((Anti__FloorZ <= (INVALID_HEIGHT+5.0f)) ? Anti__GroundZ : Anti__FloorZ) + DIFF_OVERGROUND;
          
         if (!GetPlayer()->CanFly() &&
             !GetPlayer()->HasAuraType(SPELL_AURA_FEATHER_FALL) &&
-            !GetPlayer()->GetBaseMap()->IsUnderWater(movementInfo.GetPos()->x, movementInfo.GetPos()->y, movementInfo.GetPos()->z-7.0f) &&
+            !GetPlayer()->GetTerrain()->IsUnderWater(movementInfo.GetPos()->x, movementInfo.GetPos()->y, movementInfo.GetPos()->z-7.0f) &&
             Anti__MapZ < GetPlayer()->GetPositionZ() && Anti__MapZ > (INVALID_HEIGHT+DIFF_OVERGROUND + 5.0f))
         {
             static const float DIFF_AIRJUMP=25.0f; // 25 is realy high, but to many false positives...
@@ -574,7 +574,7 @@ void WorldSession::HandleMovementOpcodes( WorldPacket & recv_data )
                 Map *map = GetPlayer()->GetMap();
                 if (map)
                 {
-                    float plane_z = map->GetHeight(movementInfo.GetPos()->x, movementInfo.GetPos()->y, MAX_HEIGHT) - movementInfo.GetPos()->z;
+                    float plane_z = GetPlayer()->GetTerrain()->GetHeight(movementInfo.GetPos()->x, movementInfo.GetPos()->y, MAX_HEIGHT) - movementInfo.GetPos()->z;
                     plane_z = (plane_z < -500.0f) ? 0 : plane_z; //check holes in heigth map
                     if(plane_z > 0.1f || plane_z < -0.1f)
                     {
@@ -588,7 +588,7 @@ void WorldSession::HandleMovementOpcodes( WorldPacket & recv_data )
     // <<---- anti-cheat features
 
     /* process position-change */
-    HandleMoverRelocation(movementInfo,mover,plMover);
+    HandleMoverRelocation(movementInfo);
 
     if (plMover)
         plMover->UpdateFallInformationIfNeed(movementInfo, opcode);
@@ -890,10 +890,10 @@ void WorldSession::HandleMoveKnockBackAck( WorldPacket & recv_data )
     recv_data >> Unused<uint32>();                          // knockback packets counter
     recv_data >> movementInfo;
 
-    if (!VerifyMovementInfo(movementInfo,guid,mover))
+    if (!VerifyMovementInfo(movementInfo, guid))
         return;
 
-    HandleMoverRelocation(movementInfo, mover, plMover);
+    HandleMoverRelocation(movementInfo);
 
     WorldPacket data(MSG_MOVE_KNOCK_BACK, recv_data.size() + 15);
     data << mover->GetPackGUID();
@@ -944,10 +944,10 @@ void WorldSession::HandleSummonResponseOpcode(WorldPacket& recv_data)
     _player->SummonIfPossible(agree);
 }
 
-bool WorldSession::VerifyMovementInfo(MovementInfo& movementInfo, ObjectGuid& guid, Unit* mover) const
+bool WorldSession::VerifyMovementInfo(MovementInfo const& movementInfo, ObjectGuid const& guid) const
 {
     // ignore wrong guid (player attempt cheating own session for not own guid possible...)
-    if (guid != mover->GetObjectGuid())
+    if (guid != _player->GetMover()->GetObjectGuid())
         return false;
 
     if (!MaNGOS::IsValidMapCoord(movementInfo.GetPos()->x, movementInfo.GetPos()->y, movementInfo.GetPos()->z, movementInfo.GetPos()->o))
@@ -970,12 +970,14 @@ bool WorldSession::VerifyMovementInfo(MovementInfo& movementInfo, ObjectGuid& gu
     return true;
 }
 
-void WorldSession::HandleMoverRelocation(MovementInfo& movementInfo, Unit* mover, Player* plMover)
+void WorldSession::HandleMoverRelocation(MovementInfo& movementInfo)
 {
     movementInfo.UpdateTime(getMSTime());
 
-    if (plMover)
-    {                                                          // not known if this is right (vehicle patch)
+    Unit *mover = _player->GetMover();
+
+    if (Player *plMover = mover->GetTypeId() == TYPEID_PLAYER ? (Player*)mover : NULL)
+    {                                                            // not known if this is right (vehicle patch)
         if (movementInfo.HasMovementFlag(MOVEFLAG_ONTRANSPORT) /*&& !mover->GetVehicleGuid()*/)
         {
             if (!plMover->m_transport)
@@ -1007,11 +1009,11 @@ void WorldSession::HandleMoverRelocation(MovementInfo& movementInfo, Unit* mover
         if (movementInfo.HasMovementFlag(MOVEFLAG_SWIMMING) != plMover->IsInWater())
         {
             // now client not include swimming flag in case jumping under water
-            plMover->SetInWater( !plMover->IsInWater() || plMover->GetBaseMap()->IsUnderWater(movementInfo.GetPos()->x, movementInfo.GetPos()->y, movementInfo.GetPos()->z) );
+            plMover->SetInWater( !plMover->IsInWater() || plMover->GetTerrain()->IsUnderWater(movementInfo.GetPos()->x, movementInfo.GetPos()->y, movementInfo.GetPos()->z) );
         }
             
         // do not know if following "if" is right
-        if(plMover->GetBaseMap()->IsUnderWater(movementInfo.GetPos()->x, movementInfo.GetPos()->y, movementInfo.GetPos()->z-7.0f))
+        if(plMover->GetTerrain()->IsUnderWater(movementInfo.GetPos()->x, movementInfo.GetPos()->y, movementInfo.GetPos()->z-7.0f))
         {
             plMover->m_anti_BeginFallZ=INVALID_HEIGHT;
         }

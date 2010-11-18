@@ -851,27 +851,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\game\MapInstanced.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\game\MapInstanced.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\game\MapManager.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\game\MapManager.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\game\MapUpdater.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\game\MapUpdater.h"
 				>
 			</File>
 			<File
