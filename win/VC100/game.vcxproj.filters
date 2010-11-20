@@ -22,6 +22,9 @@
     <Filter Include="References">
       <UniqueIdentifier>{64bb42b8-e7ba-4247-b337-492f644daeeb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OutdoorPVP">
+      <UniqueIdentifier>{ed14669e-6188-45db-9592-f8ec74f04030}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\game\AccountMgr.cpp">
@@ -445,6 +448,47 @@
     <ClCompile Include="..\..\src\game\UnitAuraProcHandler.cpp">
       <Filter>World/Handlers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\AuctionHouseBot.cpp" />
+    <ClCompile Include="..\..\src\game\ChatLexicsCutter.cpp" />
+    <ClCompile Include="..\..\src\game\ChatLog.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\IRCClient.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\IRCCmd.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\IRCCmde.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\IRCConf.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\IRCIO.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\IRCLog.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\IRCSock.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\MCS_OnlinePlayers.cpp" />
+    <ClCompile Include="..\..\src\game\OutdoorPvP.cpp">
+      <Filter>OutdoorPVP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\OutdoorPvPEP.cpp">
+      <Filter>OutdoorPVP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\OutdoorPvPGH.cpp">
+      <Filter>OutdoorPVP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\OutdoorPvPHP.cpp">
+      <Filter>OutdoorPVP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\OutdoorPvPMgr.cpp">
+      <Filter>OutdoorPVP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\OutdoorPvPNA.cpp">
+      <Filter>OutdoorPVP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\OutdoorPvPSI.cpp">
+      <Filter>OutdoorPVP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\OutdoorPvPTF.cpp">
+      <Filter>OutdoorPVP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\OutdoorPvPZM.cpp">
+      <Filter>OutdoorPVP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\PossessedSummon.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -833,6 +877,50 @@
       <Filter>Tool</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\Camera.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\AuctionHouseBot.h" />
+    <ClInclude Include="..\..\src\game\ChatLexicsCutter.h" />
+    <ClInclude Include="..\..\src\game\ChatLog.h" />
+    <ClInclude Include="..\..\src\game\mangchat\IRCClient.h" />
+    <ClInclude Include="..\..\src\game\mangchat\IRCCmd.h" />
+    <ClInclude Include="..\..\src\game\mangchat\IRCFunc.h" />
+    <ClInclude Include="..\..\src\game\mangchat\IRCLog.h" />
+    <ClInclude Include="..\..\src\game\mangchat\MCS_OnlinePlayers.h" />
+    <ClInclude Include="..\..\src\game\OutdoorPvP.h">
+      <Filter>OutdoorPVP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\OutdoorPvPEP.h">
+      <Filter>OutdoorPVP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\OutdoorPvPGH.h">
+      <Filter>OutdoorPVP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\OutdoorPvPHP.h">
+      <Filter>OutdoorPVP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\OutdoorPvPImpl.h">
+      <Filter>OutdoorPVP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\OutdoorPvPMgr.h">
+      <Filter>OutdoorPVP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\OutdoorPvPNA.h">
+      <Filter>OutdoorPVP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\OutdoorPvPSI.h">
+      <Filter>OutdoorPVP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\OutdoorPvPTF.h">
+      <Filter>OutdoorPVP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\OutdoorPvPZM.h">
+      <Filter>OutdoorPVP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\ZoneScript.h">
+      <Filter>OutdoorPVP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\PossessedSummon.h">
       <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
